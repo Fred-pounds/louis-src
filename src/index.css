@@ -40,7 +40,7 @@
     --hero-gradient: linear-gradient(180deg, hsl(145 60% 22% / 0.85) 0%, hsl(145 60% 22% / 0.7) 100%);
     --table-header: 145 60% 22%;
     --section-border: 145 30% 75%;
-    
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -79,7 +79,7 @@
     --border: 145 20% 25%;
     --input: 145 20% 25%;
     --ring: 145 50% 45%;
-    
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -97,11 +97,29 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased relative min-h-screen overflow-x-hidden;
     font-family: 'Inter', sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Playfair Display', serif;
   }
 }
@@ -121,12 +139,19 @@
   }
 
   .hero-button {
-    @apply bg-primary text-primary-foreground px-8 py-3 rounded font-semibold 
-           hover:bg-accent transition-all duration-300 shadow-lg hover:shadow-xl;
+    @apply bg-primary text-primary-foreground px-8 py-3 rounded font-semibold hover:bg-accent transition-all duration-300 shadow-lg hover:shadow-xl;
   }
 
   .card-elevated {
     @apply bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300;
+  }
+
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-lg transition-all duration-300;
+  }
+
+  .hover-lift {
+    @apply hover:-translate-y-2 hover:shadow-xl transition-all duration-300 ease-out;
   }
 
   .table-header-cell {
@@ -138,14 +163,11 @@
   }
 
   .input-field {
-    @apply w-full px-4 py-3 border border-border rounded bg-background 
-           focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
-           transition-all duration-200;
+    @apply w-full px-4 py-3 border border-border rounded bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200;
   }
 
   .submit-button {
-    @apply bg-primary text-primary-foreground px-8 py-3 rounded font-semibold 
-           hover:bg-accent transition-all duration-300 w-full md:w-auto;
+    @apply bg-primary text-primary-foreground px-8 py-3 rounded font-semibold hover:bg-accent transition-all duration-300 w-full md:w-auto;
   }
 }
 

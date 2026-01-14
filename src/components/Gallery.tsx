@@ -25,46 +25,61 @@ const Gallery = () => {
 
   return (
     <>
-      <section id="gallery" className="py-20 bg-background">
+      <section id="gallery" className="py-24 bg-background relative overflow-hidden">
+        {/* Decorative background element */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -z-10" />
+
         <div className="container mx-auto px-4">
           <h2 className="section-heading">Gallery</h2>
           <div className="section-divider" />
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+          {/* Masonry Grid */}
+          <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4 max-w-6xl mx-auto">
             {galleryImages.map((image, index) => (
               <div
                 key={index}
-                className="cursor-pointer overflow-hidden rounded-lg"
+                className="break-inside-avoid cursor-zoom-in overflow-hidden rounded-xl group relative mb-4"
                 onClick={() => setSelectedImage(image.src)}
               >
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 z-10" />
                 <img
                   src={image.src}
                   alt={image.alt}
-                  className="w-full aspect-square object-cover transition-transform duration-300 hover:scale-110"
+                  className="w-full h-auto object-cover transform transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
                 />
+
+                {/* Hover Overlay with Caption */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                  <p className="text-white text-sm font-medium transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                    {image.alt}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Lightbox */}
+      {/* Enhanced Lightbox */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-foreground/90 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fade-in"
           onClick={() => setSelectedImage(null)}
         >
           <button
-            className="absolute top-4 right-4 text-primary-foreground p-2 hover:bg-primary-foreground/20 rounded-full transition-colors"
+            className="absolute top-6 right-6 text-white/70 hover:text-white p-2 hover:bg-white/10 rounded-full transition-all duration-200 z-50"
             onClick={() => setSelectedImage(null)}
             aria-label="Close"
           >
             <X size={32} />
           </button>
+
           <img
             src={selectedImage}
             alt="Gallery preview"
-            className="max-w-full max-h-[90vh] object-contain rounded-lg"
+            className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl animate-in zoom-in-95 duration-300"
             onClick={(e) => e.stopPropagation()}
           />
         </div>

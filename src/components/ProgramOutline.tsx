@@ -27,7 +27,7 @@ const ProgramOutline = () => {
             </thead>
             <tbody className="bg-card">
               {programData.map((item, index) => (
-                <tr 
+                <tr
                   key={index}
                   className="hover:bg-secondary/50 transition-colors"
                 >
